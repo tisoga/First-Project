@@ -1,0 +1,29 @@
+{% extends 'main/base.html'%}
+
+{% block title %}Registration Page{% endblock %}
+
+{% block isi %}
+	<h2><u>Form Registration</u></h2>
+	<center>
+	<table border="0">
+		<form method="POST">
+		{% csrf_token %}
+			<tr>
+				<th>Username</th>
+				<td>{{form.username}}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>{{form.password1}}</td>
+			</tr>
+			<tr>
+				<th>Verify Password</th>
+				<td>{{form.password2}}</td>
+			</tr>
+			<tr align="right">
+				<td colspan="2"><input type="submit" value="Register"></td>
+			</tr>
+		</form>
+	</table>
+	</center>
+{% endblock%}

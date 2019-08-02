@@ -1,0 +1,33 @@
+{% extends 'main/base.html'%}
+
+{% block title %}Login Page{% endblock%}
+
+{% block isi %}
+	{% if form.errors %}
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			  Login Gagal! Periksa kembali username dan password anda.
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+	{% endif %}
+	<h2><u>Form Login</u></h2>
+	<center>
+	<table border="0">
+		<form method="POST">
+		{% csrf_token %}
+			<tr>
+				<th>Username</th>
+				<td>{{form.username}}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>{{form.password}}</td>
+			</tr>
+			<tr align="right">
+				<td colspan="2"><input type="submit" value="Login"></td>
+			</tr>
+		</form>
+	</table>
+	</center>
+{% endblock%}

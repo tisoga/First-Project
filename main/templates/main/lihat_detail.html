@@ -1,0 +1,80 @@
+{% extends 'main/base.html'%}
+
+{% block title %}Detail Produk {{produk.nama_produk}}{% endblock %}
+
+{% block isi %}
+	<h2><u>Detail Produk {{produk.nama_produk}}</u></h2>
+	<br>
+	<div class="tdetail">
+		<center>
+		<table border="1">
+			<tr style="height: 250px;">
+				<td colspan="2">
+					<img src="{{produk.foto_produk.url}}" width="350px;">
+				</td>
+			</tr>
+			{% if form is None %}
+			<tr>
+				<th>Kode Produk</th>
+				<td>{{produk.kode_produk}}</td>
+			</tr>
+			<tr>
+				<th>Nama Produk</th>
+				<td>{{produk.nama_produk}}</td>
+			</tr>
+			<tr>
+				<th>Stok Produk</th>
+				<td>{{produk.stok_produk}}</td>
+			</tr>
+			<tr>
+				<th>Deskripsi Produk</th>
+				<td>{{produk.desc_produk}}</td>
+			</tr>
+			<tr>
+				<th>Harga Produk</th>
+				<td>{{produk.harga_produk}}</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<a href="./detail?edit={{produk.kode_produk}}"><button>Edit</button></a>
+					<a href="/lihat_produk"><button>Back</button></a>
+				</td>
+			</tr>
+			{% else %}
+			<form method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+			<tr>
+				<th>Kode Produk</th>
+				<td>{{form.kode_produk}}</td>
+			</tr>
+			<tr>
+				<th>Nama Produk</th>
+				<td>{{form.nama_produk}}</td>
+			</tr>
+			<tr>
+				<th>Stok Produk</th>
+				<td>{{form.stok_produk}}</td>
+			</tr>
+			<tr>
+				<th>Deskripsi Produk</th>
+				<td>{{form.desc_produk}}</td>
+			</tr>
+			<tr>
+				<th>Harga Produk</th>
+				<td>{{form.harga_produk}}</td>
+			</tr>
+			<tr>
+				<th>Foto Produk</th>
+				<td>{{form.foto_produk}}</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<input type="submit" value="Save">
+				</td>
+			</tr>
+			</form>
+			{% endif %}
+		</table>
+		</center>
+	</div>
+{% endblock %}

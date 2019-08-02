@@ -13,6 +13,7 @@
 				<th style="width: 150px;">Nama Produk</th>
 				<th style="width: 50px;">Stok</th>
 				<th style="width: 70px;">Harga</th>
+				<th style="width: 70px;">Lokasi Gudang</th>
 				<th style="width: 130px;">Action</th>
 			</tr>
 		{% for produk in tabel%}
@@ -22,6 +23,7 @@
 				<td>{{produk.nama_produk}}</td>
 				<td style="text-align: center;">{{produk.stok_produk}}</td>
 				<td>{{produk.harga_produk}}</td>
+				<td>{{produk.kode_gudang.lokasi_gudang}}</td>
 				<td colspan="2">
 					<a href="./?kode={{produk.kode_produk}}"><button>hapus</button></a>
 					<a href="./detail?kode={{produk.kode_produk}}"><button>detail</button></a>

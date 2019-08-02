@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login,logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .forms import form_produk
-from .models import tabel_produk
+from .models import tabel_produk, ref_gudang
 # Create your views here.
 def homepage(request):
 	if request.method == 'POST':
@@ -50,6 +50,11 @@ def logout_request(request):
 
 def tambah_produk(request):
 	form = form_produk()
+	gudang = ref_gudang.objects.all()
+	# choices = []
+	# for x in gudang:
+	# 	choices.append([x,x])
+	# form.fields['lokasi_gudang'].choices = choices
 	if request.method == 'POST':
 		form = form_produk(request.POST, request.FILES)
 		if form.is_valid():
@@ -59,14 +64,18 @@ def tambah_produk(request):
 			desc = form.cleaned_data['desc_produk']
 			harga = form.cleaned_data['harga_produk']
 			foto = form.cleaned_data['foto_produk']
+			lokasi = request.POST.get('lokasi')
+			gudang = ref_gudang.objects.get(kode_gudang = lokasi)
+			print(lokasi)
 			tabel_produk.objects.create(kode_produk = kode, nama_produk = nama,
 								  		stok_produk = stok, desc_produk = desc,
-								  		harga_produk = harga, foto_produk = foto)
+								  		harga_produk = harga, foto_produk = foto,
+								  		kode_gudang = gudang)
 			messages.success(request, f"Produk {nama.title()} berhasil disimpan!")
 			return redirect('main:lihat')
 	return render(request = request,
 				  template_name = 'main/tambah_produk.html',
-				  context = {'form': form,
+				  context = {'form': form, 'gudang': gudang,
 				             'active': 'tambah'})
 
 def lihat_produk(request):
@@ -104,17 +113,6 @@ def lihat_detail(request):
 		if request.method == 'POST':
 			form = form_produk(request.POST, request.FILES)
 			if form.is_valid():
-				# kodeu = form.cleaned_data['kode_produk']
-				# nama = form.cleaned_data['nama_produk']
-				# stok = form.cleaned_data['stok_produk']
-				# desc = form.cleaned_data['desc_produk']
-				# harga = form.cleaned_data['harga_produk']
-				# foto = form.cleaned_data['foto_produk']
-				# tabel_produk.objects.filter(kode_produk = kode).insert(nama_produk = nama,
-				# 													   stok_produk = stok,
-				# 													   desc_produk = desc,
-				# 													   harga_produk = harga,
-				# 													   foto_produk = foto)
 				kodeu = request.POST.get('kode_produk')
 				nama = request.POST.get('nama_produk')
 				stok = request.POST.get('stok_produk')
